@@ -1,0 +1,93 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#wrapper {
+    margin: 50px auto;
+    width: 65%;
+}
+
+#add_friend, #friends_list {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#add_friend {
+    width: 40%;
+    margin: 0px 20px 20px 0px;
+}
+
+#friends_list {
+    width: 45%;
+}
+
+label {
+    display: block;
+    margin: 5px;
+}
+input {
+    float: right;
+    margin-right: 40px;
+}
+
+#buttons {
+    padding: 10px 0px;
+    height: 50px;
+}
+
+input[type='submit'] {
+    margin: 10px;
+    width: 75px;
+    float: left;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+#friend_cards {
+    height: 460px;
+    overflow-y: auto;
+    border: 2px inset #999999;
+}
+
+#friend_cards hr {
+    margin-top: 10px;
+}
+
+.friend_card {
+    cursor: pointer;
+    color: black;
+}
+
+.friend_card:hover {
+    background-color: aqua;
+}
+.friend_card.selected {
+    background-color: cornflowerblue;
+    color: white;
+}
+
+.friend_card p {
+    padding: 1px 15px;
+    font-size: 0.9em;
+}
+
+.friend_card p:first-child {
+    padding-top: 10px;
+}
+
+.friend_card:last-child {
+    margin-bottom: 10px;
+}
+
+#clear {
+    margin: 10px 65px;
+    width: 150px;
+}

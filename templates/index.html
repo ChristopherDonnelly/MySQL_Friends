@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <title>Friends</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $(document).ready(function(){
+
+                $('input[type="text"]').blur(function() {
+                    if($('input[type="text"]').filter(function () {
+                        return $.trim($(this).val()).length == 0
+                    }).length == 0){
+                        $('#add').removeAttr('disabled');
+                    }else{
+                        $('#add').attr('disabled', 'disabled');
+                    }
+                });
+
+                $(".friend_card").click(function(e){
+
+                    var $form=$('form');
+                    var $this=$(this);
+
+                    $(".friend_card").removeClass('selected');
+
+                    if($this.attr('data-click-state') == 1) {
+                        $this.attr('data-click-state', 0);
+
+                        $(this).removeClass('selected');
+
+                        $form.find('#friend_id').val('');
+                        $form.find('#first_name').val('');
+                        $form.find('#last_name').val('');
+                        $form.find('#age').val('');
+                        $form.find('#occupation').val('');
+
+                        $('input[type="submit"]:not("#clear")').attr('disabled', 'disabled');
+
+                    }else{
+                        $(".friend_card").attr('data-click-state', 0);
+
+                        $this.attr('data-click-state', 1);
+
+                        $form.find('#friend_id').val($this.find('.id').attr('data'));
+                        $form.find('#first_name').val($this.find('.first_name').attr('data'));
+                        $form.find('#last_name').val($this.find('.last_name').attr('data'));
+                        $form.find('#age').val($this.find('.age').attr('data'));
+                        $form.find('#occupation').val($this.find('.occupation').attr('data'));
+
+                        $('input[type="submit"]').removeAttr('disabled');
+                        $this.addClass('selected');
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <h1>Friends List!</h1>
+            <div id="add_friend">
+                <h2>Add a Friend</h2>
+                <form action='/friends' method='POST'>
+                    <input type="hidden" name="friend_id" id="friend_id" value="{{ one_friend['id'] }}">
+                    <label for="first_name">First Name: <input type="text" name="first_name" id="first_name" value="{{ one_friend['first_name'] }}"></label>
+                    <label for="last_name">Last Name: <input type="text" name="last_name" id="last_name" value="{{ one_friend['last_name'] }}"></label>
+                    <label for="age">Age: <input type="text" name="age" id="age" value="{{ one_friend['age'] }}"></label>
+                    <label for="occupation">Occupation: <input type="text" name="occupation" id="occupation" value="{{ one_friend['occupation'] }}"></label>
+                    <div id="buttons">
+                        <input type="submit" name="submit" id="add" value="Add" disabled>
+                        <input type="submit" name="submit" id="update" value="Update" disabled>
+                        <input type="submit" name="submit" id="delete" value="Delete" disabled>
+
+                        <input type="submit" name="submit" id="clear" value="Clear">
+
+                    </div>
+                </form>
+            </div>
+            <div id="friends_list">
+                <h2>These are all my friends!</h2>
+                <div id="friend_cards">
+                    <hr>
+                    {% for friend in all_friends: %}
+                        {% if friend['id'] | int != 0 %}
+                            <div class="friend_card">
+                                <p class="id" data="{{ friend['id'] }}">ID: {{ friend['id'] }}</p>
+                                <input type="hidden" class="first_name" data="{{ friend['first_name'] }}">
+                                <input type="hidden" class="last_name" data="{{ friend['last_name'] }}">
+                                <p class="full_name" data="{{ friend['full_name'] }}">Full Name: {{ friend['full_name'] }}</p>
+                                <p class="age" data="{{ friend['age'] }}">Age: {{ friend['age'] }}</p>
+                                <p class="occupation" data="{{ friend['occupation'] }}">Occupation: {{ friend['occupation'] }}</p>
+                                <hr>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
